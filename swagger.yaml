@@ -1,0 +1,168 @@
+swagger: '2.0'
+info:
+  description: >-
+    The TurnOnline.biz REST API designed for cooperation with on-premise
+    accounting system.
+  version: 1.0-SNAPSHOT
+  title: TurnOnline.biz On-premise Accounting API
+  contact:
+    name: TurnOnline.biz Team
+    url: 'https://www.turnonline.biz'
+    email: support@turnonline.biz
+  license:
+    name: LGPL-2.1
+    url: >-
+      https://github.com/turnonline/on-premise-accounting-api/blob/master/LICENSE
+host: onpremise.swagger.io
+basePath: /onpremise
+schemes:
+  - http
+security:
+  - Basic: []
+paths:
+  /address-book:
+    post:
+      summary: Creates a new contact
+      description: Creates a new contact in the address book. Duplicates are allowed.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/ContactCard'
+      responses:
+        '200':
+          description: contact response
+          schema:
+            $ref: '#/definitions/ContactCard'
+  '/address-book/{id}':
+    get:
+      summary: Returns a contact for given ID
+      description: Returns a single contact based on the supplied ID.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of contact to fetch
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Contact response.
+          schema:
+            $ref: '#/definitions/ContactCard'
+    delete:
+      summary: Deletes a contact for given ID
+      description: Deletes a single contact based on the supplied ID.
+      parameters:
+        - name: id
+          in: path
+          description: ID of contact to fetch
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: contact deleted
+securityDefinitions:
+  Basic:
+    type: basic
+definitions:
+  ContactCard:
+    type: object
+    required:
+      - company
+      - postalAddressSame
+      - vatPayer
+    properties:
+      businessName:
+        type: string
+        description: Company business name.
+      city:
+        type: string
+        description: City.
+      company:
+        type: boolean
+        description: The boolean indication whether contact represents a business entity.
+        default: false
+      companyId:
+        type: string
+        description: Company ID.
+      contactEmail:
+        type: string
+        description: Email as a contact email address.
+      id:
+        type: string
+        description: >-
+          The contact card identification. If not provided in case of POST will
+          cause to create a new contact card record.
+      name:
+        type: string
+        description: Personal name.
+      postalAddressBusinessName:
+        type: string
+        description: Company postal address business name.
+      postalAddressCity:
+        type: string
+        description: Postal address city.
+      postalAddressName:
+        type: string
+        description: Personal postal address name.
+      postalAddressSame:
+        type: boolean
+        description: >-
+          The boolean indication whether contact postal address is same as
+          company/personal address. If not postal address is being expected.
+        default: false
+      postalAddressState:
+        type: string
+        description: Postal address country code.
+      postalAddressStreet:
+        type: string
+        description: Postal address street and street number.
+      postalAddressSurname:
+        type: string
+        description: Personal postal address surname.
+      postalAddressZip:
+        type: string
+        description: Postal address code.
+      state:
+        type: string
+        description: Country code.
+      street:
+        type: string
+        description: Street and street number.
+      surname:
+        type: string
+        description: Personal surname.
+      taxId:
+        type: string
+        description: Company tax ID.
+      vatId:
+        type: string
+        description: Company VAT ID. Provided if vatPayer property is true.
+      vatPayer:
+        type: boolean
+        description: The boolean indication whether contact business entity is VAT payer.
+        default: false
+      zip:
+        type: string
+        description: Postal code.
+    description: Address book card that represents business partner contact.
+  Error:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
