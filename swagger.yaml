@@ -20,6 +20,10 @@ tags:
     description: The on-premise accounting address book.
   - name: Number series
     description: The on-premise accounting number series management.
+  - name: Billing unit
+    description: The billing unit of measure used as product unit at invoice.
+  - name: Product catalog
+    description: The on-premise accounting product catalog.
 schemes:
   - http
 security:
@@ -63,7 +67,7 @@ paths:
           description: >-
             It's a failure of the server. The client can repeat the request
             without modifications at any later time.
-  '/addressBook/{id}':
+  '/addressBook/{cardId}':
     get:
       tags:
         - Address book
@@ -72,12 +76,11 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: id
+        - name: cardId
           in: path
-          description: ID of contact to fetch
+          description: The ID of contact to work with
           required: true
-          type: integer
-          format: int64
+          type: string
       responses:
         '200':
           description: Contact response.
@@ -101,17 +104,17 @@ paths:
       tags:
         - Address book
       summary: Updates the contact
+      description: Updates the contact in on-premise accounting system.
       consumes:
         - application/json
       produces:
         - application/json
       parameters:
-        - name: id
+        - name: cardId
           in: path
-          description: ID of contact to fetch
+          description: The ID of contact to work with
           required: true
-          type: integer
-          format: int64
+          type: string
         - in: body
           name: body
           required: false
@@ -147,12 +150,11 @@ paths:
       summary: Deletes the contact
       description: Deletes a single contact based on the supplied ID.
       parameters:
-        - name: id
+        - name: cardId
           in: path
-          description: ID of contact to fetch
+          description: The ID of contact to work with
           required: true
-          type: integer
-          format: int64
+          type: string
       responses:
         '204':
           description: Contact deleted
@@ -206,7 +208,7 @@ paths:
           description: >-
             It's a failure of the server. The client can repeat the request
             without modifications at any later time.
-  '/numberSeries/{id}':
+  '/numberSeries/{nsId}':
     put:
       tags:
         - Number series
@@ -217,12 +219,11 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: id
+        - name: nsId
           in: path
-          description: ID of number series to fetch
+          description: The ID of number series to work with
           required: true
-          type: integer
-          format: int32
+          type: string
         - in: body
           name: body
           required: false
@@ -252,6 +253,220 @@ paths:
           description: >-
             It's a failure of the server. The client can repeat the request
             without modifications at any later time.
+  /product:
+    post:
+      tags:
+        - Product catalog
+      summary: Creates a new product
+      description: Creates a new product in the product catalog.
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '201':
+          description: Product response
+          schema:
+            $ref: '#/definitions/Product'
+        '400':
+          description: >-
+            The error indicates that client has made a request that server
+            couldn't understand. The client should not repeat the request
+            without modifications.
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: The error when the authentication credential fails.
+        '408':
+          description: >-
+            The server timed out processing of the request. The client may
+            repeat the request without modifications at any later time.
+        '500':
+          description: >-
+            It's a failure of the server. The client can repeat the request
+            without modifications at any later time.
+  '/product/{productId}':
+    get:
+      tags:
+        - Product catalog
+      summary: Returns the product
+      description: Returns a single product based on the supplied ID.
+      parameters:
+        - name: productId
+          in: path
+          description: The ID of product to work with
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Product response
+          schema:
+            $ref: '#/definitions/Product'
+        '401':
+          description: The error when the authentication credential fails.
+        '404':
+          description: >-
+            The error when client tries to retrieve a resource that doesn't
+            exist.
+        '408':
+          description: >-
+            The server timed out processing of the request. The client may
+            repeat the request without modifications at any later time.
+        '500':
+          description: >-
+            It's a failure of the server. The client can repeat the request
+            without modifications at any later time.
+    put:
+      tags:
+        - Product catalog
+      summary: Updates the product
+      description: Updates the product in on-premise accounting system.
+      parameters:
+        - name: productId
+          in: path
+          description: The ID of product to work with
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '201':
+          description: Product response
+          schema:
+            $ref: '#/definitions/Product'
+        '400':
+          description: >-
+            The error indicates that client has made a request that server
+            couldn't understand. The client should not repeat the request
+            without modifications.
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: The error when the authentication credential fails.
+        '404':
+          description: The error when client tries to update a resource that doesn't exist.
+        '408':
+          description: >-
+            The server timed out processing of the request. The client may
+            repeat the request without modifications at any later time.
+        '500':
+          description: >-
+            It's a failure of the server. The client can repeat the request
+            without modifications at any later time.
+    delete:
+      tags:
+        - Product catalog
+      summary: Deletes the product
+      description: Deletes a single product based on the supplied ID.
+      parameters:
+        - name: productId
+          in: path
+          description: The ID of product to work with
+          required: true
+          type: string
+      responses:
+        '204':
+          description: Product deleted
+        '401':
+          description: The error when the authentication credential fails.
+        '404':
+          description: The error when client tries to delete a resource that doesn't exist.
+        '408':
+          description: >-
+            The server timed out processing of the request. The client may
+            repeat the request without modifications at any later time.
+        '500':
+          description: >-
+            It's a failure of the server. The client can repeat the request
+            without modifications at any later time.
+  /unit:
+    post:
+      tags:
+        - Billing unit
+      summary: Creates a new billing unit
+      description: Creates a new billing unit in on-premise accounting system.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/BillingUnit'
+      responses:
+        '201':
+          description: Billing unit response
+          schema:
+            $ref: '#/definitions/BillingUnit'
+        '400':
+          description: >-
+            The error indicates that client has made a request that server
+            couldn't understand. The client should not repeat the request
+            without modifications.
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: The error when the authentication credential fails.
+        '408':
+          description: >-
+            The server timed out processing of the request. The client may
+            repeat the request without modifications at any later time.
+        '500':
+          description: >-
+            It's a failure of the server. The client can repeat the request
+            without modifications at any later time.
+  '/unit/{unitCode}':
+    put:
+      tags:
+        - Billing unit
+      summary: Updates the billing unit
+      description: Updates the billing unit in on-premise accounting system.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: unitCode
+          in: path
+          description: The unique code of the billing unit to work with
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/BillingUnit'
+      responses:
+        '201':
+          description: Billing unit response
+          schema:
+            $ref: '#/definitions/BillingUnit'
+        '400':
+          description: >-
+            The error indicates that client has made a request that server
+            couldn't understand. The client should not repeat the request
+            without modifications.
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: The error when the authentication credential fails.
+        '404':
+          description: The error when client tries to update a resource that doesn't exist.
+        '408':
+          description: >-
+            The server timed out processing of the request. The client may
+            repeat the request without modifications at any later time.
+        '500':
+          description: >-
+            It's a failure of the server. The client can repeat the request
+            without modifications at any later time.
 securityDefinitions:
   Basic:
     type: basic
@@ -262,6 +477,19 @@ definitions:
     type: object
   BillingUnit:
     type: object
+    required:
+      - code
+    properties:
+      code:
+        type: string
+        description: The code of the billing unit.
+      name:
+        type: string
+        description: The name of the billing unit.
+      type:
+        type: string
+        description: The type of the billing unit.
+    description: The billing unit of measure used as product unit at invoice.
   ContactCard:
     type: object
     required:
@@ -352,8 +580,6 @@ definitions:
         format: int32
       message:
         type: string
-  IncomingInvoice:
-    type: object
   Invoice:
     type: object
   NumberSeries:
@@ -392,7 +618,7 @@ definitions:
       numberOfChars:
         type: integer
         format: int32
-        description: The max number of characters or digits.
+        description: The max number of characters or digits of the increment.
       postfix:
         type: string
         description: >-
@@ -406,3 +632,43 @@ definitions:
     description: Accounting period
   Product:
     type: object
+    required:
+      - name
+      - unit
+      - vatRate
+    properties:
+      code:
+        type: string
+        description: 'The product code, unique only per account.'
+      description:
+        type: string
+        description: 'The product description, not appearing at invoice.'
+      id:
+        type: string
+        description: The product identification.
+      name:
+        type: string
+        description: >-
+          The product name, very short summary placed at invoice as a billing
+          item.
+      priceExclVat:
+        type: number
+        format: double
+        description: The product catalog price excluding VAT.
+      unit:
+        description: The billing unit of measure at invoice.
+        $ref: '#/definitions/BillingUnit'
+      vatRate:
+        description: The billing item VAT rate.
+        $ref: '#/definitions/VatRate'
+    description: >-
+      The product catalog, catalog item may be placed at invoice as billing item
+      with corresponding billing unit.
+  VatRate:
+    type: string
+    description: VAT rate
+    default: standard
+    enum:
+      - standard
+      - reduced
+      - zero
