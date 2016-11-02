@@ -3,7 +3,7 @@ info:
   description: >-
     The TurnOnline.biz REST API designed for cooperation with on-premise
     accounting system.
-  version: 1.0-SNAPSHOT
+  version: '1'
   title: TurnOnline.biz On-premise Accounting API
   contact:
     name: TurnOnline.biz Team
@@ -14,7 +14,7 @@ info:
     url: >-
       https://github.com/turnonline/on-premise-accounting-api/blob/master/LICENSE
 host: onpremise.swagger.io
-basePath: /onpremise
+basePath: /v1
 tags:
   - name: Address book
     description: The on-premise accounting address book.
@@ -29,7 +29,7 @@ schemes:
 security:
   - Basic: []
 paths:
-  /addressBook:
+  /contacts:
     post:
       tags:
         - Address book
@@ -67,7 +67,7 @@ paths:
           description: >-
             It's a failure of the server. The client can repeat the request
             without modifications at any later time.
-  '/addressBook/{cardId}':
+  '/contacts/{contactId}':
     get:
       tags:
         - Address book
@@ -76,7 +76,7 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: cardId
+        - name: contactId
           in: path
           description: The ID of contact to work with
           required: true
@@ -110,7 +110,7 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: cardId
+        - name: contactId
           in: path
           description: The ID of contact to work with
           required: true
@@ -150,7 +150,7 @@ paths:
       summary: Deletes the contact
       description: Deletes a single contact based on the supplied ID.
       parameters:
-        - name: cardId
+        - name: contactId
           in: path
           description: The ID of contact to work with
           required: true
@@ -253,12 +253,16 @@ paths:
           description: >-
             It's a failure of the server. The client can repeat the request
             without modifications at any later time.
-  /product:
+  /products:
     post:
       tags:
         - Product catalog
       summary: Creates a new product
       description: Creates a new product in the product catalog.
+      consumes:
+        - application/json
+      produces:
+        - application/json
       parameters:
         - in: body
           name: body
@@ -287,12 +291,14 @@ paths:
           description: >-
             It's a failure of the server. The client can repeat the request
             without modifications at any later time.
-  '/product/{productId}':
+  '/products/{productId}':
     get:
       tags:
         - Product catalog
       summary: Returns the product
       description: Returns a single product based on the supplied ID.
+      produces:
+        - application/json
       parameters:
         - name: productId
           in: path
@@ -323,6 +329,10 @@ paths:
         - Product catalog
       summary: Updates the product
       description: Updates the product in on-premise accounting system.
+      consumes:
+        - application/json
+      produces:
+        - application/json
       parameters:
         - name: productId
           in: path
@@ -384,7 +394,7 @@ paths:
           description: >-
             It's a failure of the server. The client can repeat the request
             without modifications at any later time.
-  /unit:
+  /units:
     post:
       tags:
         - Billing unit
@@ -422,7 +432,7 @@ paths:
           description: >-
             It's a failure of the server. The client can repeat the request
             without modifications at any later time.
-  '/unit/{unitCode}':
+  '/units/{unitCode}':
     put:
       tags:
         - Billing unit
