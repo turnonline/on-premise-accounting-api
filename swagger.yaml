@@ -16,6 +16,7 @@ info:
 host: onpremise.swagger.io
 basePath: /v1
 tags:
+  - name: Accounting system account
   - name: Address book
     description: The on-premise accounting address book.
   - name: Number series
@@ -32,6 +33,89 @@ schemes:
 security:
   - Basic: []
 paths:
+  /accounts:
+    post:
+      tags:
+        - Accounting system account
+      summary: Creates a new account
+      description: Creates a new account in accounting system.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Account'
+      responses:
+        '201':
+          description: Account response
+          schema:
+            $ref: '#/definitions/Account'
+        '400':
+          description: >-
+            The error indicates that client has made a request that server
+            couldn't understand. The client should not repeat the request
+            without modifications.
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: The error when the authentication credential fails.
+        '408':
+          description: >-
+            The server timed out processing of the request. The client may
+            repeat the request without modifications at any later time.
+        '500':
+          description: >-
+            It's a failure of the server. The client can repeat the request
+            without modifications at any later time.
+  '/accounts/{accountId}':
+    put:
+      tags:
+        - Accounting system account
+      summary: Updates the account
+      description: Updates the account in accounting system.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: accountId
+          in: path
+          description: The ID of account to work with
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Account'
+      responses:
+        '201':
+          description: Account response
+          schema:
+            $ref: '#/definitions/Account'
+        '400':
+          description: >-
+            The error indicates that client has made a request that server
+            couldn't understand. The client should not repeat the request
+            without modifications.
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: The error when the authentication credential fails.
+        '404':
+          description: The error when client tries to update a resource that doesn't exist.
+        '408':
+          description: >-
+            The server timed out processing of the request. The client may
+            repeat the request without modifications at any later time.
+        '500':
+          description: >-
+            It's a failure of the server. The client can repeat the request
+            without modifications at any later time.
   /bankAccount:
     post:
       tags:
@@ -710,6 +794,111 @@ securityDefinitions:
   Basic:
     type: basic
 definitions:
+  Account:
+    type: object
+    required:
+      - businessName
+      - domicile
+      - legalForm
+      - vatPayer
+    properties:
+      billingAddress:
+        type: object
+        description: 'If present, the billing address is not same as company address.'
+        properties:
+          businessName:
+            type: string
+            description: The billing business name.
+          city:
+            type: string
+            description: The billing address city.
+          country:
+            type: string
+            description: >-
+              The billing address ISO 3166 alpha-2 country code. It's case
+              insensitive, but always sent as upper case.
+          street:
+            type: string
+            description: The billing address street and street number.
+          zip:
+            type: string
+            description: The billing address code.
+      businessName:
+        type: string
+        description: The company business name.
+      city:
+        type: string
+        description: The company domicile city.
+      companyId:
+        type: string
+        description: The company business identification number.
+      contactFirstName:
+        type: string
+        description: The company contact first name.
+      contactLastName:
+        type: string
+        description: The company contact last name.
+      contactPrefix:
+        type: string
+        description: The company contact prefix.
+      contactSuffix:
+        type: string
+        description: The company contact suffix.
+      domicile:
+        type: string
+        description: >-
+          The company ISO 3166 alpha-2 country code. It's case insensitive, but
+          always sent as upper case.
+      id:
+        type: string
+        description: The company account identification.
+      legalForm:
+        type: string
+        description: The company legal form.
+        default: ltd
+        enum:
+          - ltd
+          - soho
+          - inc
+      postalAddress:
+        type: object
+        description: 'If present, the postal address is not same as company address.'
+        properties:
+          businessName:
+            type: string
+            description: The postal business name.
+          city:
+            type: string
+            description: The postal address city.
+          country:
+            type: string
+            description: >-
+              The postal address ISO 3166 alpha-2 country code. It's case
+              insensitive, but always sent as upper case.
+          street:
+            type: string
+            description: The postal address street and street number.
+          zip:
+            type: string
+            description: The postal address code.
+      street:
+        type: string
+        description: The company street and street number.
+      taxId:
+        type: string
+        description: The company tax payer identification number of the company.
+      vatId:
+        type: string
+        description: >-
+          The company value added tax identification number (VAT ID) of the
+          company. Provided if vatPayer property is true.
+      vatPayer:
+        type: boolean
+        description: The boolean indication whether company is registered as VAT payer.
+        default: false
+      zip:
+        type: string
+        description: The company postal code.
   BankAccount:
     type: object
     required:
