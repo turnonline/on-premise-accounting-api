@@ -924,9 +924,14 @@ definitions:
       primary:
         type: boolean
         description: >-
-          The boolean indication whether this bank account is marked as primary.
-          There is only single bank account allowed to be marked as primary.
+          The boolean indicating whether this bank account is being marked as
+          primary regarding invoicing. There is only single bank account allowed
+          to be marked as primary. The primary bank account will be listed at
+          invoice as a target account for the payment.
         default: false
+    description: >-
+      The bank account resource that represents an opened account in the bank
+      (signed contract) that is owned by company.
   BillingItem:
     type: object
     required:
@@ -1075,7 +1080,9 @@ definitions:
       zip:
         type: string
         description: The postal code.
-    description: Address book card that represents business partner contact.
+    description: >-
+      The contact that represents a business partner. At least one of the value
+      must be provided; either businessName or lastName.
   Error:
     type: object
     required:
@@ -1144,7 +1151,7 @@ definitions:
         type: string
         description: The optional final text placed at invoice usually at the bottom.
       formOfPayment:
-        description: The form of payment.
+        description: The form of payment listed at invoice.
         $ref: '#/definitions/FormOfPayment'
       id:
         type: string
@@ -1221,6 +1228,7 @@ definitions:
     type: object
     required:
       - name
+      - periods
     properties:
       id:
         type: string
@@ -1230,6 +1238,7 @@ definitions:
         description: The name of the number series.
       periods:
         type: array
+        description: There always must be a period for current year.
         items:
           $ref: '#/definitions/Period'
     description: >-
@@ -1239,19 +1248,23 @@ definitions:
     type: object
     required:
       - code
+      - current
+      - length
     properties:
       code:
         type: string
         description: >-
-          The accounting period's code, generally as a year. For example 4
-          digits '2016'.
+          The accounting period code defined as a year by 4 digits. For example
+          '2016'.
       current:
         type: string
-        description: The current value of the increment.
-      numberOfChars:
+        description: >-
+          The current value of the increment. In case of the new definition
+          means a starting value.
+      length:
         type: integer
         format: int32
-        description: The max number of characters or digits of the increment.
+        description: The number of characters or digits of the increment.
       postfix:
         type: string
         description: >-
@@ -1262,7 +1275,10 @@ definitions:
         description: >-
           The number series prefix. Possible format either as static text or
           dynamic: for example %YY%.
-    description: Accounting period
+    description: >-
+      The resource that represents a definition of the invoice number increment
+      for current accounting period. Updated annually by on-premise accounting
+      system.
   Product:
     type: object
     required:
@@ -1300,10 +1316,11 @@ definitions:
         description: The billing item VAT rate.
         $ref: '#/definitions/VatRate'
     description: >-
-      The product catalog, the product to be listed at invoice as a billing item
+      The product from product catalog to be listed at invoice as a billing item
       with corresponding billing unit and amount.
   FormOfPayment:
     type: string
+    description: The enumeration of the form of payments.
     default: bankWire
     enum:
       - bankWire
