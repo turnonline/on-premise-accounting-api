@@ -524,6 +524,34 @@ paths:
           description: >-
             It's a failure of the server. The client can repeat the request
             without modifications at any later time.
+  '/invoices/{invoiceId}/pdf':
+    get:
+      tags:
+        - Invoicing
+      summary: Returns this invoice as PDF
+      produces:
+        - application/pdf
+      parameters:
+        - name: invoiceId
+          in: path
+          description: The ID of invoice to work with
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Returns the invoice as PDF document
+          schema:
+            type: file
+        '401':
+          description: The error when the authentication credential fails.
+        '408':
+          description: >-
+            The server timed out processing of the request. The client may
+            repeat the request without modifications at any later time.
+        '500':
+          description: >-
+            It's a failure of the server. The client can repeat the request
+            without modifications at any later time.
   /numberSeries:
     post:
       tags:
@@ -1398,8 +1426,6 @@ definitions:
       The definition of type of invoice. A commercial invoice (valid tax
       document) is a true invoice. A pro forma invoice is not a true invoice;
       nothing has been billed by the business and has no financial obligation.
-      The pro forma invoice is typically only used when a financial transaction
-      has not yet taken place.
     default: proforma
     enum:
       - taxDocument
