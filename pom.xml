@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2016 Comvai, s.r.o. All Rights Reserved.
+  ~
+  ~ This library is free software; you can redistribute it and/or
+  ~ modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either
+  ~ version 2.1 of the License, or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  ~ Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public
+  ~ License along with this library; if not, write to the Free Software
+  ~ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  -->
+
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>org.ctoolkit.maven</groupId>
+        <artifactId>ctoolkit-parent</artifactId>
+        <version>5</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.ctoolkit.turnonline</groupId>
+    <artifactId>turnonline-on-premise-api</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>TurnOnline.biz on-premise Accounting REST API</name>
+    <description>The TurnOnline.biz REST API designed for cooperation with on-premise accounting.</description>
+    <url>https://github.com/turnonline/on-premise-accounting-api</url>
+
+    <scm>
+        <connection>scm:git:[fetch=]git@github.com:turnonline/on-premise-accounting-api.git</connection>
+        <developerConnection>scm:git:[push=]git@github.com:turnonline/on-premise-accounting-api.git
+        </developerConnection>
+        <url>https://github.com/turnonline/on-premise-accounting-api</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <url>https://github.com/turnonline/on-premise-accounting-api/issues</url>
+    </issueManagement>
+
+    <developers>
+        <developer>
+            <name>Aurel Medvegy</name>
+            <id>medvegy</id>
+            <email>aurel.medvegy@ctoolkit.org</email>
+        </developer>
+    </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>swagger.yaml</inputSpec>
+                            <apiPackage>org.ctoolkit.turnonline.onpremise</apiPackage>
+                            <modelPackage>org.ctoolkit.turnonline.onpremise.model</modelPackage>
+                            <language>jaxrs</language>
+                            <library>jersey2</library>
+                            <configOptions>
+                                <dateLibrary>java7</dateLibrary>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-jersey2-jaxrs</artifactId>
+            <scope>compile</scope>
+            <version>1.5.9</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet-core</artifactId>
+            <version>${jersey2-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>${jersey2-version}</version>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <jersey2-version>2.22.2</jersey2-version>
+    </properties>
+</project>
