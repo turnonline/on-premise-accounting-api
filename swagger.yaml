@@ -13,8 +13,8 @@ info:
     name: LGPL-2.1
     url: >-
       https://github.com/turnonline/on-premise-accounting-api/blob/master/LICENSE
-host: onpremise.swagger.io
-basePath: /v1
+host: 'localhost:8080'
+basePath: /onpremise/v1
 tags:
   - name: Accounting system account
   - name: Address book
@@ -116,7 +116,7 @@ paths:
           description: >-
             It's a failure of the server. The client can repeat the request
             without modifications at any later time.
-  /bankAccount:
+  /bankAccounts:
     post:
       tags:
         - Bank
@@ -153,7 +153,7 @@ paths:
           description: >-
             It's a failure of the server. The client can repeat the request
             without modifications at any later time.
-  '/bankAccount/{bankAccountId}':
+  '/bankAccounts/{bankAccountId}':
     put:
       tags:
         - Bank
