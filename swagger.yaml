@@ -78,6 +78,7 @@ paths:
         - Accounting system account
       summary: Updates the account
       description: Updates the account in accounting system.
+      operationId: updateAccount
       consumes:
         - application/json
       produces:
