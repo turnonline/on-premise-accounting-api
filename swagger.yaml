@@ -39,6 +39,7 @@ paths:
         - Accounting system account
       summary: Creates a new account
       description: Creates a new account in accounting system.
+      operationId: createAccount
       consumes:
         - application/json
       produces:
@@ -121,6 +122,7 @@ paths:
       tags:
         - Bank
       summary: Creates a new bank account
+      operationId: createBankAccount
       consumes:
         - application/json
       produces:
@@ -158,6 +160,7 @@ paths:
       tags:
         - Bank
       summary: Updates the bank account
+      operationId: updateBankAccount
       consumes:
         - application/json
       produces:
@@ -203,6 +206,7 @@ paths:
         - Address book
       summary: Creates a new contact
       description: Creates a new contact in the address book. Duplicates are allowed.
+      operationId: createContact
       consumes:
         - application/json
       produces:
@@ -241,6 +245,7 @@ paths:
         - Address book
       summary: Returns the contact
       description: Returns a single contact based on the supplied ID.
+      operationId: getContact
       produces:
         - application/json
       parameters:
@@ -273,6 +278,7 @@ paths:
         - Address book
       summary: Updates the contact
       description: Updates the contact in on-premise accounting system.
+      operationId: updateContact
       consumes:
         - application/json
       produces:
@@ -317,6 +323,7 @@ paths:
         - Address book
       summary: Deletes the contact
       description: Deletes a single contact based on the supplied ID.
+      operationId: deleteContact
       parameters:
         - name: contactId
           in: path
@@ -344,6 +351,7 @@ paths:
         - Invoicing
       summary: Creates a new invoice
       description: Creates a new invoice in on-premise accounting system.
+      operationId: createInvoice
       consumes:
         - application/json
       produces:
@@ -384,6 +392,7 @@ paths:
       description: >-
         Returns a single invoice based on the supplied ID in on-premise
         accounting system.
+      operationId: getInvoice
       produces:
         - application/json
       parameters:
@@ -418,6 +427,7 @@ paths:
       description: >-
         Updates the invoice based on the supplied ID in on-premise accounting
         system.
+      operationId: updateInvoice
       consumes:
         - application/json
       produces:
@@ -462,6 +472,7 @@ paths:
         - Invoicing
       summary: Deletes the invoice
       description: Deletes a single invoice based on the supplied ID.
+      operationId: deleteInvoice
       parameters:
         - name: invoiceId
           in: path
@@ -491,6 +502,7 @@ paths:
       description: >-
         Payments related to invoice. It's possible to pay off the invoice with
         more payments.
+      operationId: createInvoicePayment
       consumes:
         - application/json
       parameters:
@@ -529,6 +541,7 @@ paths:
       tags:
         - Invoicing
       summary: Returns this invoice as PDF
+      operationId: getInvoicePdf
       produces:
         - application/pdf
       parameters:
@@ -558,6 +571,7 @@ paths:
         - Number series
       summary: Creates a new number series
       description: Creates a new number series in on-premise accounting system.
+      operationId: createNumberSeries
       consumes:
         - application/json
       produces:
@@ -596,6 +610,7 @@ paths:
         - Number series
       summary: Updates the number series
       description: Updates the number series in on-premise accounting system.
+      operationId: updateNumberSeries
       consumes:
         - application/json
       produces:
@@ -641,6 +656,7 @@ paths:
         - Product catalog
       summary: Creates a new product
       description: Creates a new product in the product catalog.
+      operationId: createProduct
       consumes:
         - application/json
       produces:
@@ -679,6 +695,7 @@ paths:
         - Product catalog
       summary: Returns the product
       description: Returns a single product based on the supplied ID.
+      operationId: getProduct
       produces:
         - application/json
       parameters:
@@ -711,6 +728,7 @@ paths:
         - Product catalog
       summary: Updates the product
       description: Updates the product in on-premise accounting system.
+      operationId: updateProduct
       consumes:
         - application/json
       produces:
@@ -755,6 +773,7 @@ paths:
         - Product catalog
       summary: Deletes the product
       description: Deletes a single product based on the supplied ID.
+      operationId: deleteProduct
       parameters:
         - name: productId
           in: path
@@ -782,6 +801,7 @@ paths:
         - Billing unit
       summary: Creates a new billing unit
       description: Creates a new billing unit in on-premise accounting system.
+      operationId: createBillingUnit
       consumes:
         - application/json
       produces:
@@ -820,6 +840,7 @@ paths:
         - Billing unit
       summary: Updates the billing unit
       description: Updates the billing unit in on-premise accounting system.
+      operationId: updateBillingUnit
       consumes:
         - application/json
       produces:
