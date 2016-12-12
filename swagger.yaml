@@ -29,9 +29,9 @@ tags:
     description: The on-premise invoicing.
   - name: Bank
 schemes:
-  - http
+  - https
 security:
-  - Basic: []
+  - ApiKey: []
 paths:
   /accounts:
     post:
@@ -882,8 +882,10 @@ paths:
             It's a failure of the server. The client can repeat the request
             without modifications at any later time.
 securityDefinitions:
-  Basic:
-    type: basic
+  ApiKey:
+    type: apiKey
+    name: key
+    in: header
 definitions:
   Account:
     type: object

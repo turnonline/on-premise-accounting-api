@@ -45,11 +45,11 @@
         }
     ],
     "schemes": [
-        "http"
+        "https"
     ],
     "security": [
         {
-            "Basic": []
+            "ApiKey": []
         }
     ],
     "paths": {
@@ -1119,8 +1119,10 @@
         }
     },
     "securityDefinitions": {
-        "Basic": {
-            "type": "basic"
+        "ApiKey": {
+            "type": "apiKey",
+            "name": "key",
+            "in": "header"
         }
     },
     "definitions": {
