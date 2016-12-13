@@ -1433,6 +1433,14 @@ definitions:
       vatRate:
         description: The billing item VAT rate.
         $ref: '#/definitions/VatRate'
+      subsidiary:
+        type: object
+        description: >-
+          An optional subsidiary properties of the product. An arbitrary map of
+          values that are specific to the concrete accounting system in order to
+          help process this product as a billing item in the accounting.
+        additionalProperties:
+          type: string
     description: >-
       The product from product catalog to be listed at invoice as a billing item
       with corresponding billing unit and amount.
