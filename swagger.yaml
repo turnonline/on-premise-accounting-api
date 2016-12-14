@@ -1227,19 +1227,19 @@ definitions:
         format: date
         description: >-
           The date of charge. If no value is provided the current date will be
-          used
+          used. RFC 3339
       dateOfIssue:
         type: string
         format: date
         description: >-
           The date of issue. If no value is provided the current date will be
-          used.
+          used. RFC 3339
       dueDate:
         type: string
         format: date
         description: >-
           The due date. If not provided, the on-premise accounting system
-          default will be applied.
+          default will be applied. RFC 3339
       finalText:
         type: string
         description: The optional final text placed at invoice usually at the bottom.
@@ -1428,8 +1428,10 @@ definitions:
           The product catalog price. The price is excluding VAT in case if
           company is VAT payer, otherwise price is final.
       unit:
-        description: The billing unit of measure at invoice.
-        $ref: '#/definitions/BillingUnit'
+        type: string
+        description: >-
+          The billing unit code - unit of measure at invoice. Taken from the
+          billing unit codebook.
       vatRate:
         description: The billing item VAT rate.
         $ref: '#/definitions/VatRate'
