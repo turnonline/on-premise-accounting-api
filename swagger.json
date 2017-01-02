@@ -1195,7 +1195,7 @@
     "securityDefinitions": {
         "ApiKey": {
             "type": "apiKey",
-            "name": "key",
+            "name": "Authorization",
             "in": "header"
         }
     },
