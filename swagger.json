@@ -1530,6 +1530,24 @@
             },
             "description": "The contact that represents a business partner. At least one of the value must be provided; either businessName or lastName."
         },
+        "Deduction": {
+            "type": "object",
+            "required": [
+                "invoiceNumber",
+                "settlement"
+            ],
+            "properties": {
+                "invoiceNumber": {
+                    "type": "string",
+                    "description": "The settlement of invoice with advance invoice number."
+                },
+                "settlement": {
+                    "type": "number",
+                    "format": "double",
+                    "description": "The total amount of the payment related to this advance invoice."
+                }
+            }
+        },
         "Error": {
             "type": "object",
             "required": [
@@ -1709,6 +1727,13 @@
                     "type": "number",
                     "format": "double",
                     "description": "The final amount for payment."
+                },
+                "deduction": {
+                    "type": "array",
+                    "description": "Deduction of advance invoice.",
+                    "items": {
+                        "$ref": "#/definitions/Deduction"
+                    }
                 }
             },
             "description": "The invoice definition. The final price always calculated by on-premise accounting system. General rule is; the prices are excluding VAT in case if company is VAT payer, otherwise prices are final."
