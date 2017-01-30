@@ -572,6 +572,46 @@
                 }
             }
         },
+        "/invoices/matches": {
+            "get": {
+                "tags": [
+                    "Invoicing"
+                ],
+                "summary": "Returns matched payments",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "required": false,
+                        "type": "string",
+                        "format": "date"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of payment matches.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PaymentMatch"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "The error when the authentication credential fails."
+                    },
+                    "408": {
+                        "description": "The server timed out processing of the request. The client may repeat the request without modifications at any later time."
+                    },
+                    "500": {
+                        "description": "It's a failure of the server. The client can repeat the request without modifications at any later time."
+                    }
+                }
+            }
+        },
         "/invoices/{invoiceId}": {
             "get": {
                 "tags": [
@@ -1797,6 +1837,31 @@
                 }
             },
             "description": "The payment that represents either a credit or debit transaction."
+        },
+        "PaymentMatch": {
+            "type": "object",
+            "required": [
+                "invoiceNumber",
+                "settlementInvoice"
+            ],
+            "properties": {
+                "invoiceNumber": {
+                    "type": "string",
+                    "description": "Settlement of outstanding invoice with advance invoice number."
+                },
+                "settlementInvoice": {
+                    "type": "string",
+                    "description": "The ID of settlement invoice, the invoice with final amount to pay: zero."
+                },
+                "paymentKeys": {
+                    "type": "array",
+                    "description": "One or more unique payment identifications related to this invoice.",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Settling invoices is the process of matching payments with invoices. A payment can be a full payment on an invoice, a partial payment, or a payment for several invoices."
         },
         "Period": {
             "type": "object",
