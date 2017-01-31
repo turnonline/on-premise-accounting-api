@@ -450,6 +450,7 @@ paths:
       tags:
         - Invoicing
       summary: Returns matched payments
+      operationId: getInvoiceMatches
       produces:
         - application/json
       parameters:
