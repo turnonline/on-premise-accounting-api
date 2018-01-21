@@ -1628,7 +1628,7 @@ definitions:
           values that are specific to the concrete accounting system in order to
           help process this product as a billing item in the accounting.
         additionalProperties:
-          type: string
+          type: object
     description: >-
       The product from product catalog to be listed at invoice as a billing item
       with corresponding billing unit and amount.

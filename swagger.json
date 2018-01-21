@@ -1946,7 +1946,7 @@
                     "type": "object",
                     "description": "An optional subsidiary properties of the product. An arbitrary map of values that are specific to the concrete accounting system in order to help process this product as a billing item in the accounting.",
                     "additionalProperties": {
-                        "type": "string"
+                        "type": "object"
                     }
                 }
             },
